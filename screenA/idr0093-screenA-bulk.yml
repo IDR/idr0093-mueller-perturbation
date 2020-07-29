@@ -1,0 +1,9 @@
+---
+target: "Screen:name:idr0093-mueller-perturbation/screenA"
+path: "idr0093-screenA-plates.tsv"
+continue: "true"
+transfer: "ln_s"
+skip: "checksum"
+parallel_upload: "10"
+columns:
+    - path
