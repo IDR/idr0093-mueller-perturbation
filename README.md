@@ -5,7 +5,7 @@
 ### idr-pilot (if applicable)
 | Task | Duration | Checked |
 | :----: |:----:| :----:|
-| Images| -- | -- |
+| Images| 5d | -- |
 | Rendering | --| -- |
 | Annotations | -- | -- |
 
