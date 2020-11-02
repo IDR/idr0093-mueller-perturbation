@@ -1,0 +1,18 @@
+---
+channels:
+    1:
+        active: true
+        label: 'DAPI (DNA)'
+    2:
+        active: true
+        label: 'EU-Alexa488 (Nascent RNA)'
+    3:
+        active: true
+        label: 'Alexa568 (PCNA)'
+    4:
+        active: true
+        label: 'Alexa647 (Succinimidyl ester'
+greyscale: false
+t: 1
+version: 2
+z: 1
