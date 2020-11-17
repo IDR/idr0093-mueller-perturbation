@@ -1,0 +1,160 @@
+---
+name: idr0093-mueller-perturbation/screenA
+version: 1
+
+defaults:
+  include: no
+  type: string
+  includeclient: yes
+  visible: yes
+  omitempty: yes
+
+columns:
+
+  - name: Control Type
+    clientname: Control Type
+    include: yes
+
+  - name: Comment [Control Type Comments]
+    clientname: Control Type Comments
+    include: yes
+
+  - name: Comment [Quality Control Comments]
+    clientname: Quality Control Comments
+    include: yes
+
+  - name: Channels
+    clientname: Channels
+    include: yes
+
+
+  ######################################################################
+  # mapr groups
+  ######################################################################
+
+  - group:
+      namespace: openmicroscopy.org/mapr/organism
+      columns:
+        - name: Characteristics [Organism]
+          clientname: Organism
+          include: yes
+
+  - group:
+      namespace: openmicroscopy.org/mapr/cell_line
+      columns:
+        - name: Characteristics [Cell Line]
+          clientname: Cell Line
+          include: yes
+
+  - group:
+      namespace: openmicroscopy.org/mapr/gene
+      columns:
+        - name: Gene Identifier
+          clientname: Gene Identifier
+          include: yes
+        - name: Gene Identifier
+          clientname: Gene Identifier URL
+          clientvalue: "https://www.ncbi.nlm.nih.gov/gene/\
+            ?term={{ value|urlencode }}"
+          include: yes
+        - name: Gene Symbol
+          clientname: Gene Symbol
+          include: yes
+        - name: HGNC Gene Symbol
+          clientname: HGNC Gene Symbol
+          include: yes
+
+  - group:
+      namespace: openmicroscopy.org/mapr/phenotype
+      columns:
+        - name: Phenotype
+          clientname: Phenotype
+          include: true
+        - name: Phenotype Term Name
+          clientname: Phenotype Term Name
+          include: true
+        - name: Phenotype Term Accession
+          clientname: Phenotype Term Accession
+          include: true
+        - name: Phenotype Term Accession
+          clientname: Phenotype Term Accession URL
+          clientvalue: http://purl.obolibrary.org/obo/{{ value|urlencode }}
+          include: true
+
+  - group:
+      namespace: openmicroscopy.org/mapr/sirna
+      columns:
+        - name: siRNA Pool Identifier 1
+          clientname: siRNA Pool Identifier
+          include: true
+
+  - group:
+      namespace: openmicroscopy.org/mapr/sirna
+      columns:
+        - name: siRNA Pool Identifier 2
+          clientname: siRNA Pool Identifier
+          include: true
+
+  - group:
+      namespace: openmicroscopy.org/mapr/sirna
+      columns:
+        - name: siRNA Pool Identifier 3
+          clientname: siRNA Pool Identifier
+          include: true
+
+  - group:
+      namespace: openmicroscopy.org/mapr/sirna/supplementary
+      columns:
+        - name: Sense Sequence 1
+          clientname: Sense Sequence
+          include: true
+        - name: Antisense Sequence 1
+          clientname: Antisense Sequence
+          include: true
+        - name: Transcript Identifier 1
+          clientname: Transcript Identifier
+          include: true
+
+  - group:
+      namespace: openmicroscopy.org/mapr/sirna/supplementary
+      columns:
+        - name: Sense Sequence 2
+          clientname: Sense Sequence
+          include: true
+        - name: Antisense Sequence 2
+          clientname: Antisense Sequence
+          include: true
+        - name: Transcript Identifier 2
+          clientname: Transcript Identifier
+          include: true
+
+  - group:
+      namespace: openmicroscopy.org/mapr/sirna/supplementary
+      columns:
+        - name: Sense Sequence 3
+          clientname: Sense Sequence
+          include: true
+        - name: Antisense Sequence 3
+          clientname: Antisense Sequence
+          include: true
+        - name: Transcript Identifier 3
+          clientname: Transcript Identifier
+          include: true
+
+
+advanced:
+  well_to_images: true
+  ignore_missing_primary_key: yes
+  primary_group_keys:
+    - namespace: openmicroscopy.org/mapr/organism
+      keys:
+        - Organism
+    - namespace: openmicroscopy.org/mapr/cell_line
+      keys:
+        - Cell Line
+    - namespace: openmicroscopy.org/mapr/phenotype
+      keys:
+        - Phenotype
+    - namespace: openmicroscopy.org/mapr/sirna
+      keys:
+        - siRNA Pool Identifier
