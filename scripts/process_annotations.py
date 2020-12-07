@@ -23,11 +23,14 @@ def split_info(name, row, row_index, df):
   :param df: The dataframe
   :return: None
   """
-  src = f"{name} 1"
-  parts = row[src].split(";")
-  for i, part in enumerate(parts):
-    tgt = f"{name} {i+1}"
-    df.at[row_index, tgt] = part
+  try:
+    src = f"{name} 1"
+    parts = row[src].split(";")
+    for i, part in enumerate(parts):
+      tgt = f"{name} {i+1}"
+      df.at[row_index, tgt] = part
+  except:
+    pass
 
 
 df = pandas.read_csv(in_file, dtype=str)
@@ -38,12 +41,18 @@ df.insert(10, "Comment [siRNA Pool]", [""] * n_rows)
 
 
 for ri, row in df.iterrows():
-  print(f"{ri}/{n_rows}")
+  print(f"{ri+1}/{n_rows}")
 
-  # remove all nans
-  for ci, cell in enumerate(row):
-    if str(cell).lower().strip() == "nan":
-      df.iat[ri, ci] = ""
+  # fix plate names
+  plate_name = str(row["Plate"]).strip()
+  plate_name = plate_name.zfill(3)
+  df.at[ri, "Plate"] = plate_name
+
+  # fix well names
+  well_name = str(row["Well"]).strip()
+  well_col = well_name[0]
+  well_row = int(well_name[1:])
+  df.at[ri, "Well"] = well_col+str(well_row)
 
   # fix GO terms
   if row["Phenotype Term Accession"]:
@@ -59,12 +68,16 @@ for ri, row in df.iterrows():
     df.at[ri, "Comment [siRNA Pool]"] = comment
     df.at[ri, "siRNA Pool Identifier 1"] = ""
     df.at[ri, "Gene Symbol"] = ""
+  else:
+    # split the three information pieces of these
+    # columns into three separate columns
+    for name in names:
+      split_info(name, row, ri, df)
 
-  # split the three information pieces of these
-  # columns into three separate columns
-  for name in names:
-    split_info(name, row, ri, df)
+  # remove all nans
+  for ci, cell in enumerate(row):
+    if str(cell).lower().strip() == "nan":
+      df.iat[ri, ci] = ""
 
 
 df.to_csv(out_file, index=False)
-
