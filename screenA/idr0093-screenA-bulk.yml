@@ -9,3 +9,4 @@ skip:
 parallel_upload: "10"
 columns:
     - path
+    - name
