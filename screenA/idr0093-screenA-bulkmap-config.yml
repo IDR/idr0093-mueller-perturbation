@@ -23,6 +23,10 @@ columns:
     clientname: Quality Control Comments
     include: yes
 
+  - name: HGNC Gene Symbol
+          clientname: HGNC Gene Symbol
+          include: yes
+
   - name: Channels
     clientname: Channels
     include: yes
@@ -60,9 +64,6 @@ columns:
         - name: Gene Symbol
           clientname: Gene Symbol
           include: yes
-        - name: HGNC Gene Symbol
-          clientname: HGNC Gene Symbol
-          include: yes
 
   - group:
       namespace: openmicroscopy.org/mapr/phenotype
@@ -85,60 +86,60 @@ columns:
       namespace: openmicroscopy.org/mapr/sirna
       columns:
         - name: siRNA Pool Identifier 1
-          clientname: siRNA Pool Identifier
+          clientname: siRNA 1 Pool Identifier
           include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna
       columns:
         - name: siRNA Pool Identifier 2
-          clientname: siRNA Pool Identifier
+          clientname: siRNA 2 Pool Identifier
           include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna
       columns:
         - name: siRNA Pool Identifier 3
-          clientname: siRNA Pool Identifier
+          clientname: siRNA 3 Pool Identifier
           include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna/supplementary
       columns:
         - name: Sense Sequence 1
-          clientname: Sense Sequence
+          clientname: Sense Sequence 1
           include: true
         - name: Antisense Sequence 1
-          clientname: Antisense Sequence
+          clientname: Antisense Sequence 1
           include: true
         - name: Transcript Identifier 1
-          clientname: Transcript Identifier
+          clientname: Transcript Identifier 1
           include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna/supplementary
       columns:
         - name: Sense Sequence 2
-          clientname: Sense Sequence
+          clientname: Sense Sequence 2
           include: true
         - name: Antisense Sequence 2
-          clientname: Antisense Sequence
+          clientname: Antisense Sequence 2
           include: true
         - name: Transcript Identifier 2
-          clientname: Transcript Identifier
+          clientname: Transcript Identifier 2
           include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna/supplementary
       columns:
         - name: Sense Sequence 3
-          clientname: Sense Sequence
+          clientname: Sense Sequence 3
           include: true
         - name: Antisense Sequence 3
-          clientname: Antisense Sequence
+          clientname: Antisense Sequence 3
           include: true
         - name: Transcript Identifier 3
-          clientname: Transcript Identifier
+          clientname: Transcript Identifier 3
           include: true
 
 
@@ -146,6 +147,10 @@ advanced:
   well_to_images: true
   ignore_missing_primary_key: yes
   primary_group_keys:
+    - namespace: openmicroscopy.org/mapr/gene
+      keys:
+      - Gene Identifier
+      - Gene Symbol
     - namespace: openmicroscopy.org/mapr/organism
       keys:
         - Organism
@@ -157,4 +162,5 @@ advanced:
         - Phenotype
     - namespace: openmicroscopy.org/mapr/sirna
       keys:
-        - siRNA Pool Identifier
+      - siRNA Identifier
+      - siRNA Pool Identifier
