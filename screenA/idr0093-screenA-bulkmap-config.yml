@@ -24,8 +24,8 @@ columns:
     include: yes
 
   - name: HGNC Gene Symbol
-          clientname: HGNC Gene Symbol
-          include: yes
+    clientname: HGNC Gene Symbol
+    include: yes
 
   - name: Channels
     clientname: Channels
@@ -142,7 +142,7 @@ columns:
           clientname: Transcript Identifier 3
           include: true
 
-    - group:
+  - group:
       namespace: openmicroscopy.org/mapr/sirna/supplementary
       columns:
         - name: Comment [siRNA Pool]
