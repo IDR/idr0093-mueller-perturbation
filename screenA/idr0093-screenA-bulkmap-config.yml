@@ -85,23 +85,41 @@ columns:
   - group:
       namespace: openmicroscopy.org/mapr/sirna
       columns:
-        - name: siRNA Pool Identifier 1
-          clientname: siRNA Pool Identifier
-          include: true
+      - name: siRNA Pool Identifier 1
+        clientname: siRNA Identifier
+        clientvalue: ""
+        include: yes
+        omitempty: no
+      - name: siRNA Pool Identifier 1
+        clientname: siRNA Pool Identifier
+        include: yes
+        omitempty: no
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna
       columns:
-        - name: siRNA Pool Identifier 2
-          clientname: siRNA Pool Identifier
-          include: true
+      - name: siRNA Pool Identifier 2
+        clientname: siRNA Identifier
+        clientvalue: ""
+        include: yes
+        omitempty: no
+      - name: siRNA Pool Identifier 2
+        clientname: siRNA Pool Identifier
+        include: yes
+        omitempty: no
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna
       columns:
-        - name: siRNA Pool Identifier 3
-          clientname: siRNA Pool Identifier
-          include: true
+      - name: siRNA Pool Identifier 3
+        clientname: siRNA Identifier
+        clientvalue: ""
+        include: yes
+        omitempty: no
+      - name: siRNA Pool Identifier 3
+        clientname: siRNA Pool Identifier
+        include: yes
+        omitempty: no
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna/supplementary
@@ -169,4 +187,5 @@ advanced:
         - Phenotype
     - namespace: openmicroscopy.org/mapr/sirna
       keys:
-        - siRNA Pool Identifier
+      - siRNA Identifier
+      - siRNA Pool Identifier
