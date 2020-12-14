@@ -19,8 +19,8 @@ columns:
     clientname: Control Type Comments
     include: yes
 
-  - name: Comment [Quality Control Comments]
-    clientname: Quality Control Comments
+  - name: Quality Control
+    clientname: Quality Control
     include: yes
 
   - name: HGNC Gene Symbol
@@ -46,7 +46,7 @@ columns:
   - group:
       namespace: openmicroscopy.org/mapr/cell_line
       columns:
-        - name: Characteristics [Cell Line]
+        - name: Characteristics [Cell Line or Strain]
           clientname: Cell Line
           include: yes
 
@@ -86,21 +86,21 @@ columns:
       namespace: openmicroscopy.org/mapr/sirna
       columns:
         - name: siRNA Pool Identifier 1
-          clientname: siRNA 1 Pool Identifier
+          clientname: siRNA Pool Identifier
           include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna
       columns:
         - name: siRNA Pool Identifier 2
-          clientname: siRNA 2 Pool Identifier
+          clientname: siRNA Pool Identifier
           include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna
       columns:
         - name: siRNA Pool Identifier 3
-          clientname: siRNA 3 Pool Identifier
+          clientname: siRNA Pool Identifier
           include: true
 
   - group:
@@ -142,6 +142,13 @@ columns:
           clientname: Transcript Identifier 3
           include: true
 
+    - group:
+      namespace: openmicroscopy.org/mapr/sirna/supplementary
+      columns:
+        - name: Comment [siRNA Pool]
+          clientname: Comment
+          include: true
+
 
 advanced:
   well_to_images: true
@@ -162,5 +169,4 @@ advanced:
         - Phenotype
     - namespace: openmicroscopy.org/mapr/sirna
       keys:
-      - siRNA Identifier
-      - siRNA Pool Identifier
+        - siRNA Pool Identifier
