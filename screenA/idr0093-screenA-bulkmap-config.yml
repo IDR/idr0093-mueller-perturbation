@@ -27,6 +27,10 @@ columns:
     clientname: HGNC Gene Symbol
     include: yes
 
+  - name: n_cells
+    clientname: Number of cells
+    include: yes
+
   - name: Channels
     clientname: Channels
     include: yes
@@ -39,48 +43,47 @@ columns:
   - group:
       namespace: openmicroscopy.org/mapr/organism
       columns:
-        - name: Characteristics [Organism]
-          clientname: Organism
-          include: yes
+      - name: Characteristics [Organism]
+        clientname: Organism
+        include: yes
 
   - group:
       namespace: openmicroscopy.org/mapr/cell_line
       columns:
-        - name: Characteristics [Cell Line or Strain]
-          clientname: Cell Line
-          include: yes
+      - name: Characteristics [Cell Line or Strain]
+        clientname: Cell Line
+        include: yes
 
   - group:
       namespace: openmicroscopy.org/mapr/gene
       columns:
-        - name: Gene Identifier
-          clientname: Gene Identifier
-          include: yes
-        - name: Gene Identifier
-          clientname: Gene Identifier URL
-          clientvalue: "https://www.ncbi.nlm.nih.gov/gene/\
-            ?term={{ value|urlencode }}"
-          include: yes
-        - name: Gene Symbol
-          clientname: Gene Symbol
-          include: yes
+      - name: Gene Identifier
+        include: yes
+        omitempty: no
+      - name: Gene Identifier
+        clientname: Gene Identifier URL
+        clientvalue: http://www.ncbi.nlm.nih.gov/gene/{{ value|urlencode }}
+        include: yes
+      - name: Gene Symbol
+        include: yes
+        omitempty: no
 
   - group:
       namespace: openmicroscopy.org/mapr/phenotype
       columns:
-        - name: Phenotype
-          clientname: Phenotype
-          include: true
-        - name: Phenotype Term Name
-          clientname: Phenotype Term Name
-          include: true
-        - name: Phenotype Term Accession
-          clientname: Phenotype Term Accession
-          include: true
-        - name: Phenotype Term Accession
-          clientname: Phenotype Term Accession URL
-          clientvalue: http://purl.obolibrary.org/obo/{{ value|urlencode }}
-          include: true
+      - name: Phenotype
+        clientname: Phenotype
+        include: true
+      - name: Phenotype Term Name
+        clientname: Phenotype Term Name
+        include: true
+      - name: Phenotype Term Accession
+        clientname: Phenotype Term Accession
+        include: true
+      - name: Phenotype Term Accession
+        clientname: Phenotype Term Accession URL
+        clientvalue: http://purl.obolibrary.org/obo/{{ value|urlencode }}
+        include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna
@@ -93,7 +96,6 @@ columns:
       - name: siRNA Pool Identifier 1
         clientname: siRNA Pool Identifier
         include: yes
-        omitempty: no
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna
@@ -106,7 +108,6 @@ columns:
       - name: siRNA Pool Identifier 2
         clientname: siRNA Pool Identifier
         include: yes
-        omitempty: no
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna
@@ -119,53 +120,61 @@ columns:
       - name: siRNA Pool Identifier 3
         clientname: siRNA Pool Identifier
         include: yes
-        omitempty: no
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna/supplementary
       columns:
-        - name: Sense Sequence 1
-          clientname: Sense Sequence 1
-          include: true
-        - name: Antisense Sequence 1
-          clientname: Antisense Sequence 1
-          include: true
-        - name: Transcript Identifier 1
-          clientname: Transcript Identifier 1
-          include: true
+      - name: siRNA Pool Identifier 1
+        clientname: siRNA Pool Identifier
+        include: yes
+      - name: Sense Sequence 1
+        clientname: Sense Sequence 
+        include: true
+      - name: Antisense Sequence 1
+        clientname: Antisense Sequence 
+        include: true
+      - name: Transcript Identifier 1
+        clientname: Transcript Identifier 
+        include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna/supplementary
       columns:
-        - name: Sense Sequence 2
-          clientname: Sense Sequence 2
-          include: true
-        - name: Antisense Sequence 2
-          clientname: Antisense Sequence 2
-          include: true
-        - name: Transcript Identifier 2
-          clientname: Transcript Identifier 2
-          include: true
+      - name: siRNA Pool Identifier 2
+        clientname: siRNA Pool Identifier
+        include: yes
+      - name: Sense Sequence 2
+        clientname: Sense Sequence 
+        include: true
+      - name: Antisense Sequence 2
+        clientname: Antisense Sequence 
+        include: true
+      - name: Transcript Identifier 2
+        clientname: Transcript Identifier 
+        include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna/supplementary
       columns:
-        - name: Sense Sequence 3
-          clientname: Sense Sequence 3
-          include: true
-        - name: Antisense Sequence 3
-          clientname: Antisense Sequence 3
-          include: true
-        - name: Transcript Identifier 3
-          clientname: Transcript Identifier 3
-          include: true
+      - name: siRNA Pool Identifier 3
+        clientname: siRNA Pool Identifier
+        include: yes
+      - name: Sense Sequence 3
+        clientname: Sense Sequence 
+        include: true
+      - name: Antisense Sequence 3
+        clientname: Antisense Sequence 
+        include: true
+      - name: Transcript Identifier 3
+        clientname: Transcript Identifier 
+        include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/sirna/supplementary
       columns:
-        - name: Comment [siRNA Pool]
-          clientname: Comment
-          include: true
+      - name: Comment [siRNA Pool]
+        clientname: Comment
+        include: true
 
 
 advanced:
