@@ -23,12 +23,12 @@ columns:
     clientname: Quality Control
     include: yes
 
-  - name: HGNC Gene Symbol
-    clientname: HGNC Gene Symbol
-    include: yes
-
   - name: n_cells
     clientname: Number of cells
+    include: yes
+
+  - name: Has Phenotype
+    clientname: Has Phenotype
     include: yes
 
   - name: Channels
@@ -50,8 +50,15 @@ columns:
   - group:
       namespace: openmicroscopy.org/mapr/cell_line
       columns:
-      - name: Characteristics [Cell Line or Strain]
+      - name: Characteristics [Cell Line]
         clientname: Cell Line
+        include: yes
+
+  - group:
+      namespace: openmicroscopy.org/mapr/cell_line/supplementary
+      columns:
+      - name: Comment [Cell Line]
+        clientname: Cell Line Comment
         include: yes
 
   - group:
@@ -67,6 +74,13 @@ columns:
       - name: Gene Symbol
         include: yes
         omitempty: no
+
+  - group:
+      namespace: openmicroscopy.org/mapr/gene/supplementary
+      columns:
+        - name: HGNC Gene Symbol
+          clientname: HGNC Gene Symbol
+          include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/phenotype
