@@ -78,9 +78,9 @@ columns:
   - group:
       namespace: openmicroscopy.org/mapr/gene/supplementary
       columns:
-        - name: HGNC Gene Symbol
-          clientname: HGNC Gene Symbol
-          include: true
+      - name: HGNC Gene Symbol
+        clientname: HGNC Gene Symbol
+        include: true
 
   - group:
       namespace: openmicroscopy.org/mapr/phenotype
@@ -197,8 +197,8 @@ advanced:
   primary_group_keys:
     - namespace: openmicroscopy.org/mapr/gene
       keys:
-      - Gene Identifier
-      - Gene Symbol
+        - Gene Identifier
+        - Gene Symbol
     - namespace: openmicroscopy.org/mapr/organism
       keys:
         - Organism
@@ -210,5 +210,5 @@ advanced:
         - Phenotype
     - namespace: openmicroscopy.org/mapr/sirna
       keys:
-      - siRNA Identifier
-      - siRNA Pool Identifier
+        - siRNA Identifier
+        - siRNA Pool Identifier
