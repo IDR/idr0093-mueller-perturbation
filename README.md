@@ -1,5 +1,5 @@
 # idr0093-mueller-perturbation
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/IDR/idr0093-mueller-perturbation/master?filepath=notebooks)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/IDR/idr0093-mueller-perturbation/master?filepath=urlpath=notebooks%2Fnotebooks%2Fidr0093_expore.ipynb%3FplateId%3D7737)
 
 ## Import Status
 
