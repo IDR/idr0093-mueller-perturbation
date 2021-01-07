@@ -1,0 +1,141 @@
+## Loading libraries
+
+```{r load_libraries}
+library(magrittr)
+library(ggplot2)
+library(romero.gateway)
+```
+
+## Log in to the IDR
+```{r connect}
+server <- OMEROServer(host = 'wss://idr.openmicroscopy.org/omero-ws', port = 443L, username='public', password='public')
+server <- connect(server)
+paste('Successfully logged in as', server@user$getUserName())
+```
+
+## Find the attachments
+```{r find_attachments}
+omeScreen <- loadObject(server, 'ScreenData', screenId)
+fileLibraryAnnotation <- getAnnotations(server, 'ScreenData', getOMEROID(omeScreen), nameFilter = fileLibrary)
+fileProcessedAnnotation <- getAnnotations(server, 'ScreenData', getOMEROID(omeScreen), nameFilter = fileProcessed)
+annotationFileLibraryID = as.integer(fileLibraryAnnotation$FileID)
+annotationFileLibraryID <- annotationFileLibraryID[[length(annotationFileLibraryID)]]
+annotationFileProcessedID = as.integer(fileProcessedAnnotation$FileID)
+annotationFileProcessedID <- annotationFileProcessedID[[length(annotationFileProcessedID)]]
+```
+
+## Load the results associated to the plate
+This is the first plate. If you select a new plate, change the ID below and the number in 
+the file name e.g. for the second plate, id is 7651 and the name will be 'single_cell_features_raw_002.csv'.
+
+```{r set_parameters}
+plateId <- 7737
+plateNumber <- "001"
+fileRawSingleCell <- paste("single_cell_features_raw_", plateNumber, ".csv", sep="")
+fileProcessedSingleCell <- paste("single_cell_features_processed_", plateNumber, ".csv", sep="")
+```
+
+```{r load_plate_results}
+omePlate <- loadObject(server, 'PlateData', plateId)
+fileRawSingleCellAnnotation <- getAnnotations(server, 'PlateData', getOMEROID(omePlate), nameFilter = fileRawSingleCell)
+fileProcessedSingleCellAnnotation <- getAnnotations(server, 'PlateData', getOMEROID(omePlate), nameFilter = fileProcessedSingleCell)
+annotationFileRawSingleCellID = as.integer(fileRawSingleCellAnnotation$FileID)
+annotationFileRawSingleCellID <- annotationFileRawSingleCellID[[length(annotationFileRawSingleCellID)]]
+annotationFileProcessedSingleCellID = as.integer(fileProcessedSingleCellAnnotation$FileID)
+annotationFileProcessedSingleCellID <- annotationFileProcessedSingleCellID[[length(annotationFileProcessedSingleCellID)]]
+```
+## Load the annotations as R-Dataframes
+```{r load_csv}
+lib <- loadCSV(server, annotationFileLibraryID)
+well_summaries <- loadCSV(server, annotationFileProcessedID)
+raw_single_cell <- loadCSV(server, annotationFileRawSingleCellID)
+processed_single_cell <- loadCSV(server, annotationFileProcessedSingleCellID)
+```
+## Close the connection
+```{r close_connection}
+disconnect(server)
+```
+## Show distributions of phenotypes
+Example to show joining of library and summaries files to plot distributions of a quantitative phenotype.
+```{r show_phenotypes}
+lib %>%
+  dplyr::left_join(well_summaries,by=c("Plate","Well")) %>%
+  dplyr::select(residuals_mean_EU_model,phenotype_mean_EU_model,`Gene.Symbol`) %>%
+  dplyr::mutate(negative_control = `Gene.Symbol`=="Scrambled") %>%
+  dplyr::filter(!is.na(`Gene.Symbol`)) %>%
+  ggplot(aes(x=residuals_mean_EU_model,fill=as.factor(phenotype_mean_EU_model))) + 
+  geom_histogram(bins = 100) + 
+  facet_grid(negative_control~.,labeller = "label_both") +
+  scale_fill_discrete("Mean EU phenotype") +
+  theme_minimal()
+```
+## Show top hits
+Example to show joining of library and summaries files to list all mean-EU 
+hits on the selected plate.
+
+```{r show_hits}
+lib %>%
+  dplyr::left_join(well_summaries,by=c("Plate","Well")) %>%
+  dplyr::filter(phenotype_mean_EU_model != 0) %>%
+  dplyr::filter(Plate==plateNumber) %>%
+  dplyr::select(`Gene.Symbol`,residuals_mean_EU_model,phenotype_mean_EU_model) %>%
+  dplyr::arrange(dplyr::desc(residuals_mean_EU_model)) 
+```
+## Compare raw and processed
+Example to show comparison of raw and processed feature values. Note that offset arises from background correction (subtraction of a constant value) and slope change arises from plate-to-plate correction (plate-wise multiplication to equalise scrambled medians).
+
+``{r compare_raw_processed}
+processed_single_cell %>%
+  dplyr::filter(Well=="G06") %>%
+  dplyr::inner_join(raw_single_cell,by=c("Object_ID","Plate","Well","well_pos_y","well_pos_x"),suffix=c("_processed","_raw")) %>%
+  ggplot(aes(x=Nuclei_Intensity_Mean_EU_raw,Nuclei_Intensity_Mean_EU_processed)) +
+  geom_point() +
+  geom_abline() +
+  theme_minimal() +
+  expand_limits(x=0,y=0)
+```
+## Single cell data with library info
+Example to show joining of library, summaries and processed single cell data to plot the single cell EU measurements as a function of protein content and cell cycle stage, for all mean-EU ‘hits’ on the selected plate.
+```{r extract_subset}
+processed_single_cell <- processed_single_cell[sample(1:nrow(processed_single_cell), 150000, replace=FALSE),]
+```
+
+```{r compare_with_lib}
+processed_single_cell %>%
+  dplyr::filter(Plate==plateNumber) %>%
+  dplyr::left_join(well_summaries,by=c("Plate","Well")) %>%
+  dplyr::left_join(lib,by = c("Plate", "Well")) %>% {
+    ggplot() +
+      geom_point(data=dplyr::filter(.,`Gene Symbol`=="Scrambled") %>% 
+                   dplyr::select(Cell_Intensity_Sum_SE,
+                                 Nuclei_Intensity_Sum_EU),
+                 mapping=aes(x=Cell_Intensity_Sum_SE,
+                             y=Nuclei_Intensity_Sum_EU), color="grey80", size=0.1) +
+      geom_point(data=dplyr::filter(.,phenotype_mean_EU_model!=0 & `Gene Symbol` !="KIF11" ) %>% 
+                   dplyr::select(phenotype_mean_EU_model,
+                                 Cell_Intensity_Sum_SE,
+                                 Nuclei_Intensity_Sum_EU,
+                                 Cell_Cycle_Stage,
+                                 `Gene Symbol`,
+                                 Well) %>%
+                   dplyr::mutate(well_id = paste(`Gene Symbol`,"(",Well,")")) %>%
+                   dplyr::distinct(),
+                 mapping=aes(x=Cell_Intensity_Sum_SE,
+                             y=Nuclei_Intensity_Sum_EU,
+                             col=Cell_Cycle_Stage), size=0.1) +
+      geom_text(data=dplyr::filter(.,phenotype_mean_EU_model!=0 & `Gene Symbol` !="KIF11" ) %>% 
+                  dplyr::select(phenotype_mean_EU_model,
+                                n_cells,
+                                `Gene Symbol`,
+                                Well) %>%
+                  dplyr::mutate(well_id = paste(`Gene Symbol`,"(",Well,")")) %>%
+                  dplyr::distinct(),
+                mapping=aes(x=-Inf,y=Inf,label=paste("#cells =",n_cells)),
+                hjust=-0.1,vjust=1,size=8/.pt,fontface="plain",family="sans") +
+      facet_wrap(phenotype_mean_EU_model~well_id,labeller = "label_both",ncol=3) +
+      theme_minimal(base_size = 8) +
+      ggtitle(paste("Plate", plateNumber, sep=" "))
+```
+
+
+
