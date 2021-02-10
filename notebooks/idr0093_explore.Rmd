@@ -15,6 +15,9 @@ paste('Successfully logged in as', server@user$getUserName())
 
 ## Find the attachments
 ```{r find_attachments}
+screenId <- 2751
+fileLibrary <- "screenA-library.csv"
+fileProcessed <- "screenA-processed.csv"
 omeScreen <- loadObject(server, 'ScreenData', screenId)
 fileLibraryAnnotation <- getAnnotations(server, 'ScreenData', getOMEROID(omeScreen), nameFilter = fileLibrary)
 fileProcessedAnnotation <- getAnnotations(server, 'ScreenData', getOMEROID(omeScreen), nameFilter = fileProcessed)
