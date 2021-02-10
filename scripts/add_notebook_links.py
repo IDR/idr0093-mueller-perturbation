@@ -28,7 +28,7 @@ def add_annotation(conn, screen_id, delete_annotation):
     :param screen_id: The screen's id
     :param delete_annotation: Pass True to delete the annotation, False otherwise
     """
-    notebook_name = "idr0093_expore.ipynb"
+    notebook_name = "idr0093_explore.ipynb"
     ref_url = "https://mybinder.org/v2/gh/IDR/idr0093-mueller-perturbation/master?urlpath=notebooks%2Fnotebooks%2Fidr0093_explore.ipynb%3FplateId%3D"
     namespace = "openmicroscopy.org/idr/analysis/notebook"
     for plate in conn.getObjects('Plate', opts={'screen': screen_id}):
@@ -54,7 +54,7 @@ if __name__ == "__main__":
         host = input("Host [localhost]: ") or 'localhost'  # noqa
         username = input("Username [demo]: ") or 'demo'
         password = getpass("Password: ")
-        screen_id = input("Screen ID [2551]: ") or '2551'
+        screen_id = input("Screen ID [2751]: ") or '2751'
         delete_annotation = input("Delete annotation [False]: ") or 'False'
 
         # Connect to the server
