@@ -101,7 +101,9 @@ def list_children(object, ignore):
 with Flow("delete_idr0093") as flow:
     # TODO: re-enable annotation delete
     key = shell(command="omero sessions key")
-    children = list_children(object, key)
+    second = shell(delete_remaining(object, first))
+    third = shell(delete_bulk(object, second))
+    children = list_children(object, third)
     commands = to_delete.map(children)
     deleted = shell.map(command=commands)
     print_output("Result:", deleted)
