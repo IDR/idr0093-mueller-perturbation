@@ -50,7 +50,7 @@ Comment[IDR Screen Name]	idr0093-mueller-perturbation/screenA
 
 Screen Sample Type	cell																
 Screen Description	Genome-wide siRNA screen to investigate the coordination of cell size and RNA production.   																		
-Screen Size	Plates: 83	5D Images: 	Planes: 1	"Average Image Dimension (XYZCT): 2560,2160,1,5,1"	Total Tb: 	# fill in any values you know													
+Screen Size	Plates: 83	5D Images: 	Planes: 1	Average Image Dimension (XYZCT): 2560,2160,1,5,1	Total Tb: 														
 Screen Example Images																			
 Screen Imaging Method	spinning disk confocal microscopy	
 			
