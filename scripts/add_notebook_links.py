@@ -36,7 +36,8 @@ def add_annotation(conn, screen_id, delete_annotation):
             to_delete = []
             for ann in plate.listAnnotations(ns=namespace):
                 to_delete.append(ann.id)
-            conn.deleteObjects('Annotation', to_delete, wait=True)
+            if to_delete:
+                conn.deleteObjects('Annotation', to_delete, wait=True)
         url = ref_url + str(plate.getId())
         key_value_data = [["Study Notebook", notebook_name],
                       ["Study Notebook URL", url]]
