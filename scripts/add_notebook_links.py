@@ -29,7 +29,7 @@ def add_annotation(conn, screen_id, delete_annotation):
     :param delete_annotation: Pass True to delete the annotation, False otherwise
     """
     notebook_name = "idr0093_explore.ipynb"
-    ref_url = "https://mybinder.org/v2/gh/IDR/idr0093-mueller-perturbation/master?urlpath=notebooks%2Fnotebooks%2Fidr0093_explore.ipynb%3FplateId%3D"
+    ref_url = "https://binder.bioimagearchive.org/v2/gh/IDR/idr0093-mueller-perturbation/master?urlpath=notebooks%2Fnotebooks%2Fidr0093_explore.ipynb%3FplateId%3D"
     namespace = "openmicroscopy.org/idr/analysis/notebook"
     for plate in conn.getObjects('Plate', opts={'screen': screen_id}):
         if delete_annotation:
